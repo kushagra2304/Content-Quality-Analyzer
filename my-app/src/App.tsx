@@ -19,7 +19,7 @@ function App() {
   setAnalysis(null);
 
   try {
-    const response = await fetch("https://content-quality-analyzer-1.onrender.com/api/analyze", {
+    const response = await fetch("https://content-quality-analyzer-1.onrender.com/analyze", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ content }),
