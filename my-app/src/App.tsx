@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 interface Analysis {
   readability: number;
@@ -15,29 +15,24 @@ function App() {
   const [loading, setLoading] = useState(false);
 
   const handleAnalyze = async () => {
-    setLoading(true);
-    setAnalysis(null);
+  setLoading(true);
+  setAnalysis(null);
 
-    try {
-      // Simulating API call with mock data for demo
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      const mockData: Analysis = {
-        readability: Math.floor(Math.random() * 40) + 60,
-        seo: Math.floor(Math.random() * 30) + 70,
-        grammar: Math.floor(Math.random() * 20) + 80,
-        tone: ["Professional", "Casual", "Friendly", "Formal", "Creative"][Math.floor(Math.random() * 5)],
-        overall: ["Good", "Average", "Excellent"][Math.floor(Math.random() * 3)],
-        suggestion: "Consider adding more transition words and breaking up long paragraphs for better readability. Your content shows good structure but could benefit from more engaging headlines."
-      };
-      
-      setAnalysis(mockData);
-    } catch (error) {
-      console.error("Error analyzing content:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    const response = await fetch("https://content-quality-analyzer-1.onrender.com/api/analyze", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content }),
+    });
+
+    const data: Analysis = await response.json();
+    setAnalysis(data);
+  } catch (error) {
+    console.error("Error analyzing content:", error);
+  } finally {
+    setLoading(false);
+  }
+};
 
   const getScoreColor = (score: number) => {
     if (score >= 80) return "text-emerald-500";
