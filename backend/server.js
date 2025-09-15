@@ -5,7 +5,13 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 require("dotenv").config();
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://content-quality-analyzer-git-main-kushs-projects-61428590.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true, 
+  })
+);
 app.use(bodyParser.json());  
 
 const PORT = 5000;
